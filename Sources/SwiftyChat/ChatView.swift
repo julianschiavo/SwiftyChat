@@ -31,12 +31,11 @@ public struct ChatView<Message: ChatMessage, User: ChatUser>: View {
     
     public var body: some View {
         GeometryReader { geometry in
-            ZStack(alignment: .bottom) {
+            VStack {
                 chatView(in: geometry)
                 inputView()
-                
-                PIPVideoCell<Message>()
             }
+            .padding(inset)
         }
         .environmentObject(DeviceOrientationInfo())
         .environmentObject(VideoManager<Message>())
@@ -80,11 +79,7 @@ public struct ChatView<Message: ChatMessage, User: ChatUser>: View {
                                 }
                             }
                     }
-                    Spacer()
-                        .frame(height: inset.bottom)
-                        .id("bottom")
                 }
-                .padding(EdgeInsets(top: inset.top, leading: inset.leading, bottom: 0, trailing: inset.trailing))
                 .onChange(of: scrollToBottom) { value in
                     if value {
                         withAnimation {
