@@ -13,6 +13,8 @@ public struct BasicInputView: View {
     
     public var onCommit: ((ChatMessageKind) -> Void)?
     
+    @FocusState private var isFocused: Bool
+    
     public init(message: Binding<String>, placeholder: String, onCommit: @escaping ((ChatMessageKind) -> Void)) {
         self._message = message
         self.placeholder = placeholder
@@ -22,6 +24,7 @@ public struct BasicInputView: View {
     public var body: some View {
         HStack {
             TextField(placeholder, text: $message, prompt: Text(placeholder))
+                .focused($isFocused)
             self.sendButton
         }
     }
@@ -30,6 +33,7 @@ public struct BasicInputView: View {
         Button {
             self.onCommit?(.text(message))
             self.message.removeAll()
+            isFocused = false
         } label: {
             Circle().fill(Color.accentColor)
                 .frame(width: 36, height: 36)
