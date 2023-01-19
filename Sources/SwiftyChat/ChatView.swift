@@ -28,7 +28,6 @@ public struct ChatView<Message: ChatMessage, User: ChatUser>: View {
     
     @Binding private var scrollTo: UUID?
     @Binding private var scrollToBottom: Bool
-    @State private var isKeyboardActive = false
     
     @State private var contentSizeThatFits: CGSize = .zero
     private var messageEditorHeight: CGFloat {
@@ -51,12 +50,10 @@ public struct ChatView<Message: ChatMessage, User: ChatUser>: View {
                 
                 PIPVideoCell<Message>()
             }
-            .iOS { $0.keyboardAwarePadding() }
         }
         .environmentObject(DeviceOrientationInfo())
         .environmentObject(VideoManager<Message>())
         .edgesIgnoringSafeArea(.bottom)
-        .iOS { $0.dismissKeyboardOnTappingOutside() }
     }
     
     @ViewBuilder private func chatView(in geometry: GeometryProxy) -> some View {
@@ -115,23 +112,6 @@ public struct ChatView<Message: ChatMessage, User: ChatUser>: View {
                         proxy.scrollTo(value, anchor: .top)
                         scrollTo = nil
                     }
-                }
-                .iOS {
-                    // Auto Scroll with Keyboard Notification
-                    $0.onReceive(
-                        NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)
-                            .debounce(for: .milliseconds(400), scheduler: RunLoop.main),
-                        perform: { _ in
-                            if !isKeyboardActive {
-                                isKeyboardActive = true
-                                scrollToBottom = true
-                            }
-                        }
-                    )
-                    .onReceive(
-                        NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification),
-                        perform: { _ in isKeyboardActive = false }
-                    )
                 }
             }
         }
