@@ -14,6 +14,13 @@ public struct BasicInputView: View {
     
     public var onCommit: ((ChatMessageKind) -> Void)?
     
+    public init(message: Binding<String>, isEditing: Binding<Bool>, placeholder: String, onCommit: @escaping ((ChatMessageKind) -> Void)) {
+        self._message = message
+        self._isEditing = isEditing
+        self.placeholder = placeholder
+        self.onCommit = onCommit
+    }
+    
     public var body: some View {
         HStack {
             TextField(placeholder, text: $message, prompt: Text(placeholder))
