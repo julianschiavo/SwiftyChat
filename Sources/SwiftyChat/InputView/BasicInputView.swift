@@ -26,12 +26,6 @@ public struct BasicInputView: View {
             TextField(placeholder, text: $message, prompt: Text(placeholder))
             self.sendButton
         }
-        //        .padding(10)
-        //        .frame(maxWidth: .infinity)
-        //        .background(Color.syllyInput)
-        //        .cornerRadius(20)
-        //        .frame(maxWidth: .infinity)
-        //        .padding(20)
     }
     
     private var sendButton: some View {
