@@ -9,14 +9,16 @@ import SwiftUI
 
 public struct BasicInputView: View {
     @Binding public var message: String
+    @Binding public var scrollToBottom: Bool
     public let placeholder: String
     
     public var onCommit: ((ChatMessageKind) -> Void)?
     
     @FocusState private var isFocused: Bool
     
-    public init(message: Binding<String>, placeholder: String, onCommit: @escaping ((ChatMessageKind) -> Void)) {
+    public init(message: Binding<String>, scrollToBottom: Binding<Bool>, placeholder: String, onCommit: @escaping ((ChatMessageKind) -> Void)) {
         self._message = message
+        self._scrollToBottom = scrollToBottom
         self.placeholder = placeholder
         self.onCommit = onCommit
     }
@@ -25,6 +27,9 @@ public struct BasicInputView: View {
         HStack {
             TextField(placeholder, text: $message, prompt: Text(placeholder))
                 .focused($isFocused)
+                .onChange(of: isFocused) { _ in
+                    scrollToBottom = true
+                }
             self.sendButton
         }
     }
@@ -35,6 +40,9 @@ public struct BasicInputView: View {
             self.message.removeAll()
             withAnimation {
                 isFocused = false
+                withAnimation {
+                    scrollToBottom = true
+                }
             }
         } label: {
             Circle().fill(Color.accentColor)
