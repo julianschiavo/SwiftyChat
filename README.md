@@ -24,11 +24,9 @@ Fully written in pure SwiftUI.
 - [x] Attributed string support that contains address, date, phoneNumber, url (text is automatically scanned)
 - [x] Landscape orientation  support (autoscales message cells with the given `cellWidth` property, if exists)
 - [x] User Avatar (with different position options, optional usage)
-- [x] Dismiss keyboard (on tapping outside).
 - [x] Multiline Input Bar added (investigate [BasicInputView](../master/Sources/SwiftyChat/InputView/BasicInputView.swift))
 - [x] Scroll to bottom.
 - [x] Round specific corner of text messages.
-- [ ] Swipe to dismiss keyboard.
 
 
 ### Quick Preview
