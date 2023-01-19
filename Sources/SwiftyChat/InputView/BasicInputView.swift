@@ -9,14 +9,12 @@ import SwiftUI
 
 public struct BasicInputView: View {
     @Binding public var message: String
-    @FocusState.Binding public var isFocused: Bool
     public let placeholder: String
     
     public var onCommit: ((ChatMessageKind) -> Void)?
     
-    public init(message: Binding<String>, isFocused: FocusState<Bool>.Binding, placeholder: String, onCommit: @escaping ((ChatMessageKind) -> Void)) {
+    public init(message: Binding<String>, placeholder: String, onCommit: @escaping ((ChatMessageKind) -> Void)) {
         self._message = message
-        self._isFocused = isFocused
         self.placeholder = placeholder
         self.onCommit = onCommit
     }
@@ -32,7 +30,6 @@ public struct BasicInputView: View {
         Button {
             self.onCommit?(.text(message))
             self.message.removeAll()
-            self.isFocused = false
         } label: {
             Circle().fill(Color.accentColor)
                 .frame(width: 36, height: 36)
