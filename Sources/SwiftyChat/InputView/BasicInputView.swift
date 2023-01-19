@@ -40,7 +40,7 @@ public struct BasicInputView: View {
             self.message.removeAll()
             withAnimation {
                 isFocused = false
-                withAnimation {
+                withAnimation(.default.delay(1)) {
                     scrollToBottom = true
                 }
             }
