@@ -33,7 +33,9 @@ public struct BasicInputView: View {
         Button {
             self.onCommit?(.text(message))
             self.message.removeAll()
-            isFocused = false
+            withAnimation {
+                isFocused = false
+            }
         } label: {
             Circle().fill(Color.accentColor)
                 .frame(width: 36, height: 36)
