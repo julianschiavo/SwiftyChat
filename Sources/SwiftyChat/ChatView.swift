@@ -29,31 +29,17 @@ public struct ChatView<Message: ChatMessage, User: ChatUser>: View {
     @Binding private var scrollTo: UUID?
     @Binding private var scrollToBottom: Bool
     
-    @State private var contentSizeThatFits: CGSize = .zero
-    private var messageEditorHeight: CGFloat {
-        min(
-            contentSizeThatFits.height,
-            0.25 * UIScreen.main.bounds.height
-        )
-    }
-    
     public var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .bottom) {
                 chatView(in: geometry)
                 inputView()
-                    .onPreferenceChange(ContentSizeThatFitsKey.self) {
-                        contentSizeThatFits = $0
-                    }
-                    .frame(height: messageEditorHeight)
-                    .padding(.bottom, 12)
                 
                 PIPVideoCell<Message>()
             }
         }
         .environmentObject(DeviceOrientationInfo())
         .environmentObject(VideoManager<Message>())
-        .edgesIgnoringSafeArea(.bottom)
     }
     
     @ViewBuilder private func chatView(in geometry: GeometryProxy) -> some View {
@@ -116,7 +102,6 @@ public struct ChatView<Message: ChatMessage, User: ChatUser>: View {
             }
         }
         .background(Color.clear)
-            .padding(.bottom, messageEditorHeight + 30)
     }
     
 }
