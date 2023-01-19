@@ -8,11 +8,11 @@
 import SwiftUI
 
 public struct BasicInputView: View {
-    @Binding var message: String
-    @Binding var isEditing: Bool
-    let placeholder: String
+    @Binding public var message: String
+    @Binding public var isEditing: Bool
+    public let placeholder: String
     
-    var onCommit: ((ChatMessageKind) -> Void)?
+    public var onCommit: ((ChatMessageKind) -> Void)?
     
     public var body: some View {
         HStack {
