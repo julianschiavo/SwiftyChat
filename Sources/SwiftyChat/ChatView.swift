@@ -14,7 +14,7 @@ public struct ChatView<Message: ChatMessage, User: ChatUser>: View {
     @Binding private var messages: [Message]
     private var inputView: () -> AnyView
 
-    private var onMessageCellTapped: (Message) -> Void = { msg in print(msg.messageKind) }
+    private var onMessageCellTapped: (Message) -> Void = { _ in }
     private var messageCellContextMenu: (Message) -> AnyView = { _ in EmptyView().embedInAnyView() }
     private var onQuickReplyItemSelected: (QuickReplyItem) -> Void = { _ in }
     private var contactCellFooterSection: (ContactItem, Message) -> [ContactCellButton] = { _, _ in [] }

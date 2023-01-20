@@ -60,7 +60,7 @@ struct AdvancedExampleView: View {
         }
         // ▼ Optional, Implement to be notified when related cell tapped
         .onMessageCellTapped({ (message) in
-            print(message.messageKind.description)
+            
         })
         // ▼ Optional, Present context menu when cell long pressed
         .messageCellContextMenu { message -> AnyView in
@@ -108,7 +108,7 @@ struct AdvancedExampleView: View {
         }
         // ▼ Optional
         .onCarouselItemAction(action: { (button, message) in
-            print(message.messageKind.description)
+            
         })
         // ▼ Required
         .environmentObject(ChatMessageCellStyle())
