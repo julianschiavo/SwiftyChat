@@ -98,7 +98,6 @@ public struct ChatView<Message: ChatMessage, User: ChatUser>: View {
             }
         }
         .background(Color.clear)
-        .padding(.bottom, messageEditorHeight + 30)
     }
     
 }
