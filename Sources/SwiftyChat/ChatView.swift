@@ -13,8 +13,9 @@ public struct ChatView<Message: ChatMessage, User: ChatUser>: View {
     
     @Binding private var messages: [Message]
     private var inputView: () -> AnyView
-
-    private var onMessageCellTapped: (Message) -> Void = { _ in }
+    private var customCellView: ((Any) -> AnyView)?
+    
+    private var onMessageCellTapped: (Message) -> Void = { msg in print(msg.messageKind) }
     private var messageCellContextMenu: (Message) -> AnyView = { _ in EmptyView().embedInAnyView() }
     private var onQuickReplyItemSelected: (QuickReplyItem) -> Void = { _ in }
     private var contactCellFooterSection: (ContactItem, Message) -> [ContactCellButton] = { _, _ in [] }
@@ -97,6 +98,7 @@ public struct ChatView<Message: ChatMessage, User: ChatUser>: View {
             }
         }
         .background(Color.clear)
+        .padding(.bottom, messageEditorHeight + 30)
     }
     
 }
@@ -111,6 +113,7 @@ internal extension ChatView {
         ChatMessageCellContainer(
             message: message,
             size: size,
+            customCell: customCellView,
             onQuickReplyItemSelected: onQuickReplyItemSelected,
             contactFooterSection: contactCellFooterSection,
             onTextTappedCallback: onAttributedTextTappedCallback,
@@ -184,7 +187,7 @@ public extension ChatView {
     ///                                 Also only shows avatar for first message in chain.
     ///                                 (disabled by default)
     ///   - inputView: inputView view to provide message
-    ///   
+    ///
     init(
         messages: Binding<[Message]>,
         scrollToBottom: Binding<Bool> = .constant(false),
@@ -211,6 +214,11 @@ public extension ChatView {
 }
 
 public extension ChatView {
+    /// Registers a custom cell view
+    func registerCustomCell(customCell: @escaping (Any) -> AnyView) -> Self {
+        then({ $0.customCellView = customCell})
+    }
+    
     /// Triggered when a ChatMessage is tapped.
     func onMessageCellTapped(_ action: @escaping (Message) -> Void) -> Self {
         then({ $0.onMessageCellTapped = action })
